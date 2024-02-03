@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Influencer {
+  id        Int      @id @default(autoincrement())
+  name      String
+  bets      Bet[]
+}
+
+model Bet {
+  id            Int       @id @default(autoincrement())
+  influencerId  Int
+  date          DateTime
+  amount        Float
+  userId        String
+  influencer    Influencer @relation(fields: [influencerId], references: [id])
+}
+
